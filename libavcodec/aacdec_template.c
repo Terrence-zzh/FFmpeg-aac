@@ -1255,6 +1255,7 @@ static av_cold int aac_decode_init(AVCodecContext *avctx)
         avctx->myhandle->fsize = fsize;
         avctx->myhandle->current = 0;
         avctx->myhandle->sync = 0;
+        avctx->myhandle->message = NULL;
         //memset(self->bitslen, 0, 4);
         memset(avctx->myhandle->messageType, 0, 5);
     }
@@ -3571,7 +3572,7 @@ static av_cold int aac_decode_close(AVCodecContext *avctx)
     }*/
     fclose(f);
 
-    if (avctx->myhandle->source) free(avctx->myhandle->source);
+    if (avctx && avctx->myhandle && avctx->myhandle->source) free(avctx->myhandle->source);
     if (avctx->myhandle->message) free(avctx->myhandle->message);
     if (avctx->myhandle) free(avctx->myhandle);
 

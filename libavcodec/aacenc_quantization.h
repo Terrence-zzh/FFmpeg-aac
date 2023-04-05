@@ -144,7 +144,7 @@ static av_always_inline float quantize_and_encode_band_cost_template(
             //int index_stega = 27 * quants[0] + 9 * quants[1] + 3 * quants[2] + quants[3];
             if (avctx_local->current / 8 < avctx_local->fsize) {
                 int i3 = 0;
-                for (i3 = 0; i3 < 38; i3++) {
+                for (i3 = 0; i3 < 31; i3++) {
                     if (curidx == threecb[i3]) {
                         int i3_tmp =
                             avctx_local->source[avctx_local->current / 8] >> (7 - avctx_local->current % 8) &
@@ -155,12 +155,12 @@ static av_always_inline float quantize_and_encode_band_cost_template(
                         avctx_local->current += 1;
                         break;
                     }
-                    if (curidx == twore[i3]) {
+                    if (curidx == threere[i3]) {
                         int i3_tmp =
                             avctx_local->source[avctx_local->current / 8] >> (7 - avctx_local->current % 8) &
                             0x1;
                         if (i3_tmp == 0x0) {
-                            curidx = twocb[i3];
+                            curidx = threecb[i3];
                         } /* 1 and do nothing */
                         avctx_local->current += 1;
                         break;
