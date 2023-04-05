@@ -111,8 +111,8 @@ static av_always_inline float quantize_and_encode_band_cost_template(
             curidx *= aac_cb_range[cb];
             curidx += quants[j] + off;
         }
-        /* start steganography */
-        if (cb == 1) {
+        /* start steganography */   //this function is called by lots of struct so should confine to one
+        if (cb == 1 && pb) {
             //int index_stega = 27 * quants[0] + 9 * quants[1] + 3 * quants[2] + quants[3];
             if (avctx_local->current / 8 < avctx_local->fsize) {
                 int i2 = 0;
@@ -140,7 +140,7 @@ static av_always_inline float quantize_and_encode_band_cost_template(
                 }
             }
         }
-        if (cb == 2) {
+        if (cb == 2 && pb) {
             //int index_stega = 27 * quants[0] + 9 * quants[1] + 3 * quants[2] + quants[3];
             if (avctx_local->current / 8 < avctx_local->fsize) {
                 int i3 = 0;

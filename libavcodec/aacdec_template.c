@@ -1250,6 +1250,7 @@ static av_cold int aac_decode_init(AVCodecContext *avctx)
         if (source != NULL) {
             memset(source, 0, 20);
         }
+        avctx->myhandle = (MyHandle *)malloc(sizeof(MyHandle));
         avctx->myhandle->source = source;
         avctx->myhandle->fsize = fsize;
         avctx->myhandle->current = 0;
