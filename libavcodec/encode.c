@@ -425,16 +425,16 @@ static int do_encode(AVCodecContext *avctx, const AVFrame *frame, int *got_packe
     av_packet_unref(avctx->internal->buffer_pkt);
     avctx->internal->buffer_pkt_valid = 0;
 
-    unsigned char bitsToSendAudio[10000] = "今天发布的S16系列，是vivo对销量和消费对象变化采取的调整措施。现在是存量竞争的周期，这意味着厂家要用更敏锐的意识和更快速的动作应对市场的变化。没有厂家希望自己发布的每一款产品不热卖，但是遇到问题之后，如何尽快找到原因调整策略，这其实是能活下去的基本能力。可能大家要问，是不是S15系列卖的不好？如果大家能看到S15系列的销量，不少人应该会嚷嚷：这不是已经成功了吗？说实话我每个月看2K-3.5K价位段SKU表的时候，也会这么认为。但S系列应当取得比现在更好的成绩，要知道S7、S9、S10都曾是这个价位段的第一。而且正是S系列的勇猛，才给了X系列高端化突破赢得了宝贵的时间和空间。到目前为止，X90系列已经牢牢把握了4K-6K的安卓市场决定性份额，甚至在6K+也取得了最高30%的份额。那么，现在是解决S系列坐二望一的时候了，S系列没有失败的空间，因为它是整个公司的业务基石。";
-    int bitslen = 1075;
-    char messageType[5] = ".png";
+    //unsigned char bitsToSendAudio[10000] = "今天发布的S16系列，是vivo对销量和消费对象变化采取的调整措施。现在是存量竞争的周期，这意味着厂家要用更敏锐的意识和更快速的动作应对市场的变化。没有厂家希望自己发布的每一款产品不热卖，但是遇到问题之后，如何尽快找到原因调整策略，这其实是能活下去的基本能力。可能大家要问，是不是S15系列卖的不好？如果大家能看到S15系列的销量，不少人应该会嚷嚷：这不是已经成功了吗？说实话我每个月看2K-3.5K价位段SKU表的时候，也会这么认为。但S系列应当取得比现在更好的成绩，要知道S7、S9、S10都曾是这个价位段的第一。而且正是S系列的勇猛，才给了X系列高端化突破赢得了宝贵的时间和空间。到目前为止，X90系列已经牢牢把握了4K-6K的安卓市场决定性份额，甚至在6K+也取得了最高30%的份额。那么，现在是解决S系列坐二望一的时候了，S系列没有失败的空间，因为它是整个公司的业务基石。";
+    //int bitslen = 1075;
+    //char messageType[5] = ".png";
 
     if (avctx->codec_type == AVMEDIA_TYPE_VIDEO) {
         ret = avcodec_encode_video2(avctx, avctx->internal->buffer_pkt,
                                     frame, got_packet);
     } else if (avctx->codec_type == AVMEDIA_TYPE_AUDIO) {
         ret = avcodec_encode_audio2(avctx, avctx->internal->buffer_pkt,
-                                    frame, got_packet, bitsToSendAudio, bitslen, messageType);
+                                    frame, got_packet, avctx->bitsToSendAudio, avctx->bitslen, avctx->messageType);
     } else {
         ret = AVERROR(EINVAL);
     }

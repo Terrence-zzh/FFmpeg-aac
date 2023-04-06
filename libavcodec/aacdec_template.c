@@ -3560,17 +3560,21 @@ static av_cold int aac_decode_close(AVCodecContext *avctx)
         }
     }
     /* output message*/
-    FILE* f = fopen("extract-message.txt", "wb+"); /* binary format to open */
-    fseek(f, 0, SEEK_SET);
-    //int num = self->current / 8;
-    fwrite(avctx->myhandle->message, sizeof(unsigned char), avctx->myhandle->fsize,
-        f);
-    //fprintf(f, "\n%s %d\n", "num=", num);
-    //fprintf(f, "%s %lu\n", "current=", self->current);
-    /*for (int i = 0; i < num; i++){
-            fprintf(f, "%c", hDecoder->source[i]);
-    }*/
-    fclose(f);
+    if (avctx->myhandle->fsize && avctx->myhandle->message) {
+        char f_name[50] = "extract-message";
+        strcat(f_name, avctx->messageType);
+        FILE* f = fopen(f_name, "wb+"); /* binary format to open */
+        fseek(f, 0, SEEK_SET);
+        //int num = self->current / 8;
+        fwrite(avctx->myhandle->message, sizeof(unsigned char), avctx->myhandle->fsize,
+            f);
+        //fprintf(f, "\n%s %d\n", "num=", num);
+        //fprintf(f, "%s %lu\n", "current=", self->current);
+        /*for (int i = 0; i < num; i++){
+                fprintf(f, "%c", hDecoder->source[i]);
+        }*/
+        fclose(f);
+    }
 
     if (avctx && avctx->myhandle && avctx->myhandle->source) free(avctx->myhandle->source);
     if (avctx->myhandle->message) free(avctx->myhandle->message);

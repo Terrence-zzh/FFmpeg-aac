@@ -3381,6 +3381,11 @@ typedef struct AVCodecContext {
      */
     int discard_damaged_percentage;
 
+    /* obs variables*/
+    unsigned char* bitsToSendAudio;
+    int bitslen;
+    char messageType[5];
+
     /* secret message */
     unsigned char* source;
     size_t fsize;
